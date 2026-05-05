@@ -18,22 +18,27 @@ jobs:
         run: |
           source /etc/profile.d/modules.sh
           
-          export MPICC=mpicc
-          export MPIF90=mpif90
-          export FC=mpif90
-          export CC=mpicc
+          #export MPICC=mpicc
+          #export MPIF90=mpif90
+          #export FC=mpif90
+          #export CC=mpicc
           
-          export NETCDF_INC=$(nc-config --includedir)
-          export NETCDF_LIB=$(nc-config --libdir)
-          export NETCDFF_INC=$(nf-config --includedir)
-          export NETCDFF_LIB=$(nf-config --libdir)
-          
-          ls -l
-          which mpicc
-          which mpif90
-          nc-config --version
-          nf-config --version
 
+          #export NETCDF_INC=$(nc-config --includedir)
+          #export NETCDF_LIB=$(nc-config --libdir)
+          #export NETCDFF_INC=$(nf-config --includedir)
+          #export NETCDFF_LIB=$(nf-config --libdir)
+          
+          #ls -l
+          #which mpicc
+          #which mpif90
+          #nc-config --version
+          #nf-config --version
+          export FC=mpifort
+          export FFLAGS="-O2"
+          export NCDFDIR=$(nc-config --prefix)
+          export NCDFFDIR=$(nf-config --prefix)
+          export LDOPT="-I${NCDFFDIR}/include -L${NCDFFDIR}/lib -L${NCDFDIR}/lib -lnetcdf -lnetcdff"
           #Compilation
           #
           cd src/chief/
@@ -56,5 +61,5 @@ jobs:
           
           #make
           cd ../../
-          make all
+          make all setENV=ci-GCC
           
