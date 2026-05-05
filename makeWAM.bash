@@ -19,6 +19,16 @@ if [ "$1" == strand ]; then
         NCDFFLAGS='-lnetcdf -lnetcdff'
         export LDOPT="${NCDFIN} ${NCDFLIB} ${NCDFFLAGS}"
 
+elif [ "$1" == ci ]; then
+        #### CI - GitHub Actions (GCC + OpenMPI) ####
+        export FC=mpifort
+        export FFLAGS="-O2"
+        NCDFDIR=$(nc-config --prefix)
+        NCDFFDIR=$(nf-config --prefix)
+        NCDFIN=-I${NCDFFDIR}/include
+        NCDFLIB="-L${NCDFFDIR}/lib -L${NCDFDIR}/lib"
+        NCDFFLAGS='-lnetcdf -lnetcdff'
+        export LDOPT="${NCDFIN} ${NCDFLIB} ${NCDFFLAGS}"
 
 elif [ "$1" == strand-oneAPI ]; then
         #### STRAND - oneAPI ####
