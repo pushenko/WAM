@@ -27,33 +27,30 @@ $(info !!!          Makefile-defined compiler variables and library paths  !!!)
 # Fortran compiler & Basic FC arguments
 #-------------------------------------------------------------------------------
 #FC = ifort
-#FC = mpiifort
+FC = mpiifort
 #FC = gfortran
-FC = mpifort
+#FC = mpifort
 
-#MODOP=-module 
-MODOP=-J
+MODOP=-module 
+#MODOP=-J
 
 #-------------------------------------------------------------------------------
 # Advanced Fortran compiler options
 #-------------------------------------------------------------------------------
-#FFLAGS = -heap-arrays 64
-#FFLAGS+= -fp-model precise
+FFLAGS = -heap-arrays 64
+FFLAGS+= -fp-model precise
 #FFLAGS+= -O0
-FFLAGS= -O3
+FFLAGS+= -O3
 #FFLAGS+= -march=native
 #FFLAGS+= -g -traceback -check all 
-FFLAGS+=$(MODOP)$(OBJDIR)
+
 #-------------------------------------------------------------------------------
 # System specific libraries
 #-------------------------------------------------------------------------------
-#NCDFDIR=/project/opt/software/netcdf/4.9.2/intel_oneAPI
-#NCDFIN=-I${NCDFDIR}/include
-#NCDFLIB=-L${NCDFDIR}/lib
-#NCDFFLAGS=-lnetcdf -lnetcdff
-NCDFIN=$(shell nf-config --fflags)#-I${NCDFDIR}/include
-NCDFLIB=#-L${NCDFDIR}/lib
-NCDFFLAGS=$(shell nf-config --flibs)
+NCDFDIR=/project/opt/software/netcdf/4.9.2/intel_oneAPI
+NCDFIN=-I${NCDFDIR}/include
+NCDFLIB=-L${NCDFDIR}/lib
+NCDFFLAGS=-lnetcdf -lnetcdff
 
 LDOPT=${NCDFIN} ${NCDFLIB} ${NCDFFLAGS}
 
@@ -84,7 +81,7 @@ SRCDIR=./src
 OBJDIR=./obj
 EXEDIR=./bin
 
-#FFLAGS+=$(MODOP)$(OBJDIR)
+FFLAGS+=$(MODOP)$(OBJDIR)
 
 # Objects for preproc
 PREPROC_OBJS = \
